@@ -1,0 +1,841 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WeebulModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cut">
+          <Key>
+            <PropertyRef Name="CutId" />
+          </Key>
+          <Property Name="CutId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CutType" Type="int" Nullable="false" />
+          <Property Name="Severity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fight">
+          <Key>
+            <PropertyRef Name="FightId" />
+          </Key>
+          <Property Name="FightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Fighter1Id" Type="int" Nullable="false" />
+          <Property Name="Fighter2Id" Type="int" Nullable="false" />
+          <Property Name="Fighter1Score" Type="int" Nullable="false" />
+          <Property Name="Fighter2Score" Type="int" Nullable="false" />
+          <Property Name="Fighter1Win" Type="bit" />
+          <Property Name="ResultType" Type="int" Nullable="false" />
+          <Property Name="IsParsed" Type="bit" Nullable="false" />
+          <Property Name="Fighter1PlanId" Type="int" Nullable="false" />
+          <Property Name="Fighter2PlanId" Type="int" Nullable="false" />
+          <Property Name="OptionsId" Type="int" Nullable="false" />
+          <Property Name="Rounds" Type="int" Nullable="false" />
+          <Property Name="ParseText" Type="nvarchar(max)" />
+          <Property Name="BadResult" Type="bit" Nullable="false" />
+          <Property Name="TkoCut" Type="nvarchar" MaxLength="255" />
+          <Property Name="CutLevelF1" Type="int" Nullable="false" />
+          <Property Name="CutLevelF2" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fighter">
+          <Key>
+            <PropertyRef Name="FighterId" />
+          </Key>
+          <Property Name="FighterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Strength" Type="int" Nullable="false" />
+          <Property Name="KOPunch" Type="int" Nullable="false" />
+          <Property Name="Speed" Type="int" Nullable="false" />
+          <Property Name="Agility" Type="int" Nullable="false" />
+          <Property Name="Chin" Type="int" Nullable="false" />
+          <Property Name="Conditioning" Type="int" Nullable="false" />
+          <Property Name="CutResistance" Type="int" Nullable="false" />
+          <Property Name="Height" Type="int" Nullable="false" />
+          <Property Name="Build" Type="int" Nullable="false" />
+          <Property Name="Weight" Type="int" Nullable="false" />
+          <Property Name="Fights" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FighterRound">
+          <Key>
+            <PropertyRef Name="FRID" />
+          </Key>
+          <Property Name="FRID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsFighter1" Type="bit" Nullable="false" />
+          <Property Name="RoundId" Type="int" Nullable="false" />
+          <Property Name="Endurance_Start" Type="float" Nullable="false" />
+          <Property Name="Endurance_Damage" Type="float" Nullable="false" />
+          <Property Name="Stun_Damage" Type="float" Nullable="false" />
+          <Property Name="Base_Damage" Type="float" Nullable="false" />
+          <Property Name="Cut_Damage" Type="float" Nullable="false" />
+          <Property Name="Fatigue_Start" Type="float" Nullable="false" />
+          <Property Name="Fatigue_End" Type="float" Nullable="false" />
+          <Property Name="TacticsId" Type="int" Nullable="false" />
+          <Property Name="IsWarned" Type="bit" Nullable="false" />
+          <Property Name="PowerPunchesLanded" Type="int" Nullable="false" />
+          <Property Name="RightsLanded" Type="int" Nullable="false" />
+          <Property Name="JabsLanded" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FighterRoundCut">
+          <Key>
+            <PropertyRef Name="FRID" />
+            <PropertyRef Name="CutID" />
+          </Key>
+          <Property Name="FRID" Type="int" Nullable="false" />
+          <Property Name="CutID" Type="int" Nullable="false" />
+          <Property Name="RoundDamage" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FightOptions">
+          <Key>
+            <PropertyRef Name="OptionsId" />
+          </Key>
+          <Property Name="OptionsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Luck" Type="float" Nullable="false" />
+          <Property Name="CutMultiplier" Type="float" Nullable="false" />
+          <Property Name="NumberOfRounds" Type="int" Nullable="false" />
+          <Property Name="WeightClass" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FightPlan">
+          <Key>
+            <PropertyRef Name="PlanId" />
+          </Key>
+          <Property Name="PlanId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlanData" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PlanName" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JudgeRound">
+          <Key>
+            <PropertyRef Name="JrsId" />
+          </Key>
+          <Property Name="JrsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fighter1Score" Type="int" Nullable="false" />
+          <Property Name="Fighter2Score" Type="int" Nullable="false" />
+          <Property Name="RoundId" Type="int" Nullable="false" />
+          <Property Name="JudgeNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Round">
+          <Key>
+            <PropertyRef Name="RoundId" />
+          </Key>
+          <Property Name="RoundId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FightId" Type="int" Nullable="false" />
+          <Property Name="Fighter1Score" Type="int" Nullable="false" />
+          <Property Name="Fighter2Score" Type="int" Nullable="false" />
+          <Property Name="ResultType" Type="int" Nullable="false" />
+          <Property Name="RoundNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tactics">
+          <Key>
+            <PropertyRef Name="TacticsId" />
+          </Key>
+          <Property Name="TacticsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Aggressiveness" Type="float" Nullable="false" />
+          <Property Name="Power" Type="float" Nullable="false" />
+          <Property Name="Defense" Type="float" Nullable="false" />
+          <Property Name="Rest" Type="float" Nullable="false" />
+          <Property Name="Strategy" Type="int" Nullable="false" />
+          <Property Name="Target" Type="int" Nullable="false" />
+          <Property Name="Dirty" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Fight_Fighter1">
+          <End Role="Fighter" Type="Self.Fighter" Multiplicity="1" />
+          <End Role="Fight" Type="Self.Fight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fighter">
+              <PropertyRef Name="FighterId" />
+            </Principal>
+            <Dependent Role="Fight">
+              <PropertyRef Name="Fighter1Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fight_Fighter2">
+          <End Role="Fighter" Type="Self.Fighter" Multiplicity="1" />
+          <End Role="Fight" Type="Self.Fight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fighter">
+              <PropertyRef Name="FighterId" />
+            </Principal>
+            <Dependent Role="Fight">
+              <PropertyRef Name="Fighter2Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fight_FightOptions">
+          <End Role="FightOptions" Type="Self.FightOptions" Multiplicity="1" />
+          <End Role="Fight" Type="Self.Fight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FightOptions">
+              <PropertyRef Name="OptionsId" />
+            </Principal>
+            <Dependent Role="Fight">
+              <PropertyRef Name="OptionsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fight_FightPlan1">
+          <End Role="FightPlan" Type="Self.FightPlan" Multiplicity="1" />
+          <End Role="Fight" Type="Self.Fight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FightPlan">
+              <PropertyRef Name="PlanId" />
+            </Principal>
+            <Dependent Role="Fight">
+              <PropertyRef Name="Fighter1PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fight_FightPlan2">
+          <End Role="FightPlan" Type="Self.FightPlan" Multiplicity="1" />
+          <End Role="Fight" Type="Self.Fight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FightPlan">
+              <PropertyRef Name="PlanId" />
+            </Principal>
+            <Dependent Role="Fight">
+              <PropertyRef Name="Fighter2PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FighterRound_Round">
+          <End Role="Round" Type="Self.Round" Multiplicity="1" />
+          <End Role="FighterRound" Type="Self.FighterRound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Round">
+              <PropertyRef Name="RoundId" />
+            </Principal>
+            <Dependent Role="FighterRound">
+              <PropertyRef Name="RoundId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FighterRound_Tactics">
+          <End Role="Tactics" Type="Self.Tactics" Multiplicity="1" />
+          <End Role="FighterRound" Type="Self.FighterRound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tactics">
+              <PropertyRef Name="TacticsId" />
+            </Principal>
+            <Dependent Role="FighterRound">
+              <PropertyRef Name="TacticsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FighterRoundCut_FighterRound">
+          <End Role="FighterRound" Type="Self.FighterRound" Multiplicity="1" />
+          <End Role="FighterRoundCut" Type="Self.FighterRoundCut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FighterRound">
+              <PropertyRef Name="FRID" />
+            </Principal>
+            <Dependent Role="FighterRoundCut">
+              <PropertyRef Name="FRID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FighterRoundCut_FighterRoundCut">
+          <End Role="Cut" Type="Self.Cut" Multiplicity="1" />
+          <End Role="FighterRoundCut" Type="Self.FighterRoundCut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cut">
+              <PropertyRef Name="CutId" />
+            </Principal>
+            <Dependent Role="FighterRoundCut">
+              <PropertyRef Name="CutID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JudgeRound_Round">
+          <End Role="Round" Type="Self.Round" Multiplicity="1" />
+          <End Role="JudgeRound" Type="Self.JudgeRound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Round">
+              <PropertyRef Name="RoundId" />
+            </Principal>
+            <Dependent Role="JudgeRound">
+              <PropertyRef Name="RoundId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Round_Fight">
+          <End Role="Fight" Type="Self.Fight" Multiplicity="1" />
+          <End Role="Round" Type="Self.Round" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fight">
+              <PropertyRef Name="FightId" />
+            </Principal>
+            <Dependent Role="Round">
+              <PropertyRef Name="FightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WeebulModelStoreContainer">
+          <EntitySet Name="Cut" EntityType="Self.Cut" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fight" EntityType="Self.Fight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fighter" EntityType="Self.Fighter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FighterRound" EntityType="Self.FighterRound" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FighterRoundCut" EntityType="Self.FighterRoundCut" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FightOptions" EntityType="Self.FightOptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FightPlan" EntityType="Self.FightPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JudgeRound" EntityType="Self.JudgeRound" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Round" EntityType="Self.Round" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tactics" EntityType="Self.Tactics" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Fight_Fighter1" Association="Self.FK_Fight_Fighter1">
+            <End Role="Fighter" EntitySet="Fighter" />
+            <End Role="Fight" EntitySet="Fight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fight_Fighter2" Association="Self.FK_Fight_Fighter2">
+            <End Role="Fighter" EntitySet="Fighter" />
+            <End Role="Fight" EntitySet="Fight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fight_FightOptions" Association="Self.FK_Fight_FightOptions">
+            <End Role="FightOptions" EntitySet="FightOptions" />
+            <End Role="Fight" EntitySet="Fight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fight_FightPlan1" Association="Self.FK_Fight_FightPlan1">
+            <End Role="FightPlan" EntitySet="FightPlan" />
+            <End Role="Fight" EntitySet="Fight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fight_FightPlan2" Association="Self.FK_Fight_FightPlan2">
+            <End Role="FightPlan" EntitySet="FightPlan" />
+            <End Role="Fight" EntitySet="Fight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FighterRound_Round" Association="Self.FK_FighterRound_Round">
+            <End Role="Round" EntitySet="Round" />
+            <End Role="FighterRound" EntitySet="FighterRound" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FighterRound_Tactics" Association="Self.FK_FighterRound_Tactics">
+            <End Role="Tactics" EntitySet="Tactics" />
+            <End Role="FighterRound" EntitySet="FighterRound" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FighterRoundCut_FighterRound" Association="Self.FK_FighterRoundCut_FighterRound">
+            <End Role="FighterRound" EntitySet="FighterRound" />
+            <End Role="FighterRoundCut" EntitySet="FighterRoundCut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FighterRoundCut_FighterRoundCut" Association="Self.FK_FighterRoundCut_FighterRoundCut">
+            <End Role="Cut" EntitySet="Cut" />
+            <End Role="FighterRoundCut" EntitySet="FighterRoundCut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JudgeRound_Round" Association="Self.FK_JudgeRound_Round">
+            <End Role="Round" EntitySet="Round" />
+            <End Role="JudgeRound" EntitySet="JudgeRound" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Round_Fight" Association="Self.FK_Round_Fight">
+            <End Role="Fight" EntitySet="Fight" />
+            <End Role="Round" EntitySet="Round" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WeebulModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Fighter">
+          <Key>
+            <PropertyRef Name="FighterId" />
+          </Key>
+          <Property Name="FighterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Strength" Type="Int32" Nullable="false" />
+          <Property Name="KOPunch" Type="Int32" Nullable="false" />
+          <Property Name="Speed" Type="Int32" Nullable="false" />
+          <Property Name="Agility" Type="Int32" Nullable="false" />
+          <Property Name="Chin" Type="Int32" Nullable="false" />
+          <Property Name="Conditioning" Type="Int32" Nullable="false" />
+          <Property Name="CutResistance" Type="Int32" Nullable="false" />
+          <Property Name="Height" Type="Int32" Nullable="false" />
+          <Property Name="Build" Type="Int32" Nullable="false" />
+          <Property Name="Weight" Type="Int32" Nullable="false" />
+          <Property Name="Fights" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Fights1" Relationship="WeebulModel.FK_Fight_Fighter1" FromRole="Fighter" ToRole="Fight" />
+          <NavigationProperty Name="Fights2" Relationship="WeebulModel.FK_Fight_Fighter2" FromRole="Fighter" ToRole="Fight" />
+        </EntityType>
+        <EntityType Name="FightPlan">
+          <Key>
+            <PropertyRef Name="PlanId" />
+          </Key>
+          <Property Name="PlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlanData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PlanName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Fights" Relationship="WeebulModel.FK_Fight_FightPlan1" FromRole="FightPlan" ToRole="Fight" />
+          <NavigationProperty Name="Fights1" Relationship="WeebulModel.FK_Fight_FightPlan2" FromRole="FightPlan" ToRole="Fight" />
+        </EntityType>
+        <EntityContainer Name="WeebulEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Fighters" EntityType="Self.Fighter" />
+          <EntitySet Name="FightPlans" EntityType="Self.FightPlan" />
+          <EntitySet Name="Cuts" EntityType="WeebulModel.Cut" />
+          <EntitySet Name="Fights" EntityType="WeebulModel.Fight" />
+          <EntitySet Name="FighterRounds" EntityType="WeebulModel.FighterRound" />
+          <EntitySet Name="FighterRoundCuts" EntityType="WeebulModel.FighterRoundCut" />
+          <EntitySet Name="FightOptions" EntityType="WeebulModel.FightOption" />
+          <EntitySet Name="Rounds" EntityType="WeebulModel.Round" />
+          <EntitySet Name="Tactics" EntityType="WeebulModel.Tactic" />
+          <AssociationSet Name="FK_FighterRoundCut_FighterRoundCut" Association="WeebulModel.FK_FighterRoundCut_FighterRoundCut">
+            <End Role="Cut" EntitySet="Cuts" />
+            <End Role="FighterRoundCut" EntitySet="FighterRoundCuts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fight_Fighter1" Association="WeebulModel.FK_Fight_Fighter1">
+            <End Role="Fighter" EntitySet="Fighters" />
+            <End Role="Fight" EntitySet="Fights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fight_Fighter2" Association="WeebulModel.FK_Fight_Fighter2">
+            <End Role="Fighter" EntitySet="Fighters" />
+            <End Role="Fight" EntitySet="Fights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fight_FightOptions" Association="WeebulModel.FK_Fight_FightOptions">
+            <End Role="FightOption" EntitySet="FightOptions" />
+            <End Role="Fight" EntitySet="Fights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fight_FightPlan1" Association="WeebulModel.FK_Fight_FightPlan1">
+            <End Role="FightPlan" EntitySet="FightPlans" />
+            <End Role="Fight" EntitySet="Fights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fight_FightPlan2" Association="WeebulModel.FK_Fight_FightPlan2">
+            <End Role="FightPlan" EntitySet="FightPlans" />
+            <End Role="Fight" EntitySet="Fights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FighterRound_Round" Association="WeebulModel.FK_FighterRound_Round">
+            <End Role="Round" EntitySet="Rounds" />
+            <End Role="FighterRound" EntitySet="FighterRounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FighterRound_Tactics" Association="WeebulModel.FK_FighterRound_Tactics">
+            <End Role="Tactic" EntitySet="Tactics" />
+            <End Role="FighterRound" EntitySet="FighterRounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FighterRoundCut_FighterRound" Association="WeebulModel.FK_FighterRoundCut_FighterRound">
+            <End Role="FighterRound" EntitySet="FighterRounds" />
+            <End Role="FighterRoundCut" EntitySet="FighterRoundCuts" />
+          </AssociationSet>
+          <EntitySet Name="JudgeRounds" EntityType="WeebulModel.JudgeRound" />
+          <AssociationSet Name="FK_JudgeRound_Round" Association="WeebulModel.FK_JudgeRound_Round">
+            <End Role="Round" EntitySet="Rounds" />
+            <End Role="JudgeRound" EntitySet="JudgeRounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Round_Fight" Association="WeebulModel.FK_Round_Fight">
+            <End Role="Fight" EntitySet="Fights" />
+            <End Role="Round" EntitySet="Rounds" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Cut">
+          <Key>
+            <PropertyRef Name="CutId" />
+          </Key>
+          <Property Name="CutId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CutType" Type="Int32" Nullable="false" />
+          <Property Name="Severity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FighterRoundCuts" Relationship="WeebulModel.FK_FighterRoundCut_FighterRoundCut" FromRole="Cut" ToRole="FighterRoundCut" />
+        </EntityType>
+        <EntityType Name="Fight">
+          <Key>
+            <PropertyRef Name="FightId" />
+          </Key>
+          <Property Name="FightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fighter1Id" Type="Int32" Nullable="false" />
+          <Property Name="Fighter2Id" Type="Int32" Nullable="false" />
+          <Property Name="Fighter1Score" Type="Int32" Nullable="false" />
+          <Property Name="Fighter2Score" Type="Int32" Nullable="false" />
+          <Property Name="Fighter1Win" Type="Boolean" />
+          <Property Name="ResultType" Type="Int32" Nullable="false" />
+          <Property Name="IsParsed" Type="Boolean" Nullable="false" />
+          <Property Name="Fighter1PlanId" Type="Int32" Nullable="false" />
+          <Property Name="Fighter2PlanId" Type="Int32" Nullable="false" />
+          <Property Name="OptionsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Fighter1" Relationship="WeebulModel.FK_Fight_Fighter1" FromRole="Fight" ToRole="Fighter" />
+          <NavigationProperty Name="Fighter2" Relationship="WeebulModel.FK_Fight_Fighter2" FromRole="Fight" ToRole="Fighter" />
+          <NavigationProperty Name="FightOption" Relationship="WeebulModel.FK_Fight_FightOptions" FromRole="Fight" ToRole="FightOption" />
+          <NavigationProperty Name="FightPlan1" Relationship="WeebulModel.FK_Fight_FightPlan1" FromRole="Fight" ToRole="FightPlan" />
+          <NavigationProperty Name="FightPlan2" Relationship="WeebulModel.FK_Fight_FightPlan2" FromRole="Fight" ToRole="FightPlan" />
+          <Property Name="NumberOfRounds" Type="Int32" Nullable="false" />
+          <Property Name="ParseText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BadResult" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Rounds" Relationship="WeebulModel.FK_Round_Fight" FromRole="Fight" ToRole="Round" />
+          <Property Name="TkoCut" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CutLevelF1" Type="Int32" Nullable="false" />
+          <Property Name="CutLevelF2" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FighterRound">
+          <Key>
+            <PropertyRef Name="FRID" />
+          </Key>
+          <Property Name="FRID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsFighter1" Type="Boolean" Nullable="false" />
+          <Property Name="RoundId" Type="Int32" Nullable="false" />
+          <Property Name="Endurance_Start" Type="Double" Nullable="false" />
+          <Property Name="Endurance_Damage" Type="Double" Nullable="false" />
+          <Property Name="Stun_Damage" Type="Double" Nullable="false" />
+          <Property Name="Base_Damage" Type="Double" Nullable="false" />
+          <Property Name="Cut_Damage" Type="Double" Nullable="false" />
+          <Property Name="Fatigue_Start" Type="Double" Nullable="false" />
+          <Property Name="Fatigue_End" Type="Double" Nullable="false" />
+          <Property Name="TacticsId" Type="Int32" Nullable="false" />
+          <Property Name="IsWarned" Type="Boolean" Nullable="false" />
+          <Property Name="PowerPunchesLanded" Type="Int32" Nullable="false" />
+          <Property Name="RightsLanded" Type="Int32" Nullable="false" />
+          <Property Name="JabsLanded" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Round" Relationship="WeebulModel.FK_FighterRound_Round" FromRole="FighterRound" ToRole="Round" />
+          <NavigationProperty Name="Tactic" Relationship="WeebulModel.FK_FighterRound_Tactics" FromRole="FighterRound" ToRole="Tactic" />
+          <NavigationProperty Name="FighterRoundCuts" Relationship="WeebulModel.FK_FighterRoundCut_FighterRound" FromRole="FighterRound" ToRole="FighterRoundCut" />
+        </EntityType>
+        <EntityType Name="FighterRoundCut">
+          <Key>
+            <PropertyRef Name="FRID" />
+            <PropertyRef Name="CutID" />
+          </Key>
+          <Property Name="FRID" Type="Int32" Nullable="false" />
+          <Property Name="CutID" Type="Int32" Nullable="false" />
+          <Property Name="RoundDamage" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Cut" Relationship="WeebulModel.FK_FighterRoundCut_FighterRoundCut" FromRole="FighterRoundCut" ToRole="Cut" />
+          <NavigationProperty Name="FighterRound" Relationship="WeebulModel.FK_FighterRoundCut_FighterRound" FromRole="FighterRoundCut" ToRole="FighterRound" />
+        </EntityType>
+        <EntityType Name="FightOption">
+          <Key>
+            <PropertyRef Name="OptionsId" />
+          </Key>
+          <Property Name="OptionsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Luck" Type="Double" Nullable="false" />
+          <Property Name="CutMultiplier" Type="Double" Nullable="false" />
+          <Property Name="NumberOfRounds" Type="Int32" Nullable="false" />
+          <Property Name="WeightClass" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Fights" Relationship="WeebulModel.FK_Fight_FightOptions" FromRole="FightOption" ToRole="Fight" />
+        </EntityType>
+        <EntityType Name="Round">
+          <Key>
+            <PropertyRef Name="RoundId" />
+          </Key>
+          <Property Name="RoundId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FightId" Type="Int32" Nullable="false" />
+          <Property Name="Fighter1Score" Type="Int32" Nullable="false" />
+          <Property Name="Fighter2Score" Type="Int32" Nullable="false" />
+          <Property Name="ResultType" Type="Int32" Nullable="false" />
+          <Property Name="RoundNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FighterRounds" Relationship="WeebulModel.FK_FighterRound_Round" FromRole="Round" ToRole="FighterRound" />
+          <NavigationProperty Name="JudgeRounds" Relationship="WeebulModel.FK_JudgeRound_Round" FromRole="Round" ToRole="JudgeRound" />
+          <NavigationProperty Name="Fight" Relationship="WeebulModel.FK_Round_Fight" FromRole="Round" ToRole="Fight" />
+        </EntityType>
+        <EntityType Name="Tactic">
+          <Key>
+            <PropertyRef Name="TacticsId" />
+          </Key>
+          <Property Name="TacticsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Aggressiveness" Type="Double" Nullable="false" />
+          <Property Name="Power" Type="Double" Nullable="false" />
+          <Property Name="Defense" Type="Double" Nullable="false" />
+          <Property Name="Rest" Type="Double" Nullable="false" />
+          <Property Name="Strategy" Type="Int32" Nullable="false" />
+          <Property Name="Target" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FighterRounds" Relationship="WeebulModel.FK_FighterRound_Tactics" FromRole="Tactic" ToRole="FighterRound" />
+          <Property Name="Dirty" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FighterRoundCut_FighterRoundCut">
+          <End Type="WeebulModel.Cut" Role="Cut" Multiplicity="1" />
+          <End Type="WeebulModel.FighterRoundCut" Role="FighterRoundCut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cut">
+              <PropertyRef Name="CutId" />
+            </Principal>
+            <Dependent Role="FighterRoundCut">
+              <PropertyRef Name="CutID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fight_Fighter1">
+          <End Type="WeebulModel.Fighter" Role="Fighter" Multiplicity="1" />
+          <End Type="WeebulModel.Fight" Role="Fight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fighter">
+              <PropertyRef Name="FighterId" />
+            </Principal>
+            <Dependent Role="Fight">
+              <PropertyRef Name="Fighter1Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fight_Fighter2">
+          <End Type="WeebulModel.Fighter" Role="Fighter" Multiplicity="1" />
+          <End Type="WeebulModel.Fight" Role="Fight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fighter">
+              <PropertyRef Name="FighterId" />
+            </Principal>
+            <Dependent Role="Fight">
+              <PropertyRef Name="Fighter2Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fight_FightOptions">
+          <End Type="WeebulModel.FightOption" Role="FightOption" Multiplicity="1" />
+          <End Type="WeebulModel.Fight" Role="Fight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FightOption">
+              <PropertyRef Name="OptionsId" />
+            </Principal>
+            <Dependent Role="Fight">
+              <PropertyRef Name="OptionsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fight_FightPlan1">
+          <End Type="WeebulModel.FightPlan" Role="FightPlan" Multiplicity="1" />
+          <End Type="WeebulModel.Fight" Role="Fight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FightPlan">
+              <PropertyRef Name="PlanId" />
+            </Principal>
+            <Dependent Role="Fight">
+              <PropertyRef Name="Fighter1PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fight_FightPlan2">
+          <End Type="WeebulModel.FightPlan" Role="FightPlan" Multiplicity="1" />
+          <End Type="WeebulModel.Fight" Role="Fight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FightPlan">
+              <PropertyRef Name="PlanId" />
+            </Principal>
+            <Dependent Role="Fight">
+              <PropertyRef Name="Fighter2PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FighterRound_Round">
+          <End Type="WeebulModel.Round" Role="Round" Multiplicity="1" />
+          <End Type="WeebulModel.FighterRound" Role="FighterRound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Round">
+              <PropertyRef Name="RoundId" />
+            </Principal>
+            <Dependent Role="FighterRound">
+              <PropertyRef Name="RoundId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FighterRound_Tactics">
+          <End Type="WeebulModel.Tactic" Role="Tactic" Multiplicity="1" />
+          <End Type="WeebulModel.FighterRound" Role="FighterRound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tactic">
+              <PropertyRef Name="TacticsId" />
+            </Principal>
+            <Dependent Role="FighterRound">
+              <PropertyRef Name="TacticsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FighterRoundCut_FighterRound">
+          <End Type="WeebulModel.FighterRound" Role="FighterRound" Multiplicity="1" />
+          <End Type="WeebulModel.FighterRoundCut" Role="FighterRoundCut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FighterRound">
+              <PropertyRef Name="FRID" />
+            </Principal>
+            <Dependent Role="FighterRoundCut">
+              <PropertyRef Name="FRID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="JudgeRound">
+          <Key>
+            <PropertyRef Name="JrsId" />
+          </Key>
+          <Property Name="JrsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fighter1Score" Type="Int32" Nullable="false" />
+          <Property Name="Fighter2Score" Type="Int32" Nullable="false" />
+          <Property Name="RoundId" Type="Int32" Nullable="false" />
+          <Property Name="JudgeNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Round" Relationship="WeebulModel.FK_JudgeRound_Round" FromRole="JudgeRound" ToRole="Round" />
+        </EntityType>
+        <Association Name="FK_JudgeRound_Round">
+          <End Type="WeebulModel.Round" Role="Round" Multiplicity="1" />
+          <End Type="WeebulModel.JudgeRound" Role="JudgeRound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Round">
+              <PropertyRef Name="RoundId" />
+            </Principal>
+            <Dependent Role="JudgeRound">
+              <PropertyRef Name="RoundId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Round_Fight">
+          <End Type="WeebulModel.Fight" Role="Fight" Multiplicity="1" />
+          <End Type="WeebulModel.Round" Role="Round" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fight">
+              <PropertyRef Name="FightId" />
+            </Principal>
+            <Dependent Role="Round">
+              <PropertyRef Name="FightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WeebulModelStoreContainer" CdmEntityContainer="WeebulEntities">
+          <EntitySetMapping Name="Fighters">
+            <EntityTypeMapping TypeName="WeebulModel.Fighter">
+              <MappingFragment StoreEntitySet="Fighter">
+                <ScalarProperty Name="FighterId" ColumnName="FighterId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Strength" ColumnName="Strength" />
+                <ScalarProperty Name="KOPunch" ColumnName="KOPunch" />
+                <ScalarProperty Name="Speed" ColumnName="Speed" />
+                <ScalarProperty Name="Agility" ColumnName="Agility" />
+                <ScalarProperty Name="Chin" ColumnName="Chin" />
+                <ScalarProperty Name="Conditioning" ColumnName="Conditioning" />
+                <ScalarProperty Name="CutResistance" ColumnName="CutResistance" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Build" ColumnName="Build" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Fights" ColumnName="Fights" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FightPlans">
+            <EntityTypeMapping TypeName="WeebulModel.FightPlan">
+              <MappingFragment StoreEntitySet="FightPlan">
+                <ScalarProperty Name="PlanName" ColumnName="PlanName" />
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+                <ScalarProperty Name="PlanData" ColumnName="PlanData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cuts">
+            <EntityTypeMapping TypeName="WeebulModel.Cut">
+              <MappingFragment StoreEntitySet="Cut">
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="CutType" ColumnName="CutType" />
+                <ScalarProperty Name="CutId" ColumnName="CutId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fights">
+            <EntityTypeMapping TypeName="WeebulModel.Fight">
+              <MappingFragment StoreEntitySet="Fight">
+                <ScalarProperty Name="CutLevelF2" ColumnName="CutLevelF2" />
+                <ScalarProperty Name="CutLevelF1" ColumnName="CutLevelF1" />
+                <ScalarProperty Name="TkoCut" ColumnName="TkoCut" />
+                <ScalarProperty Name="BadResult" ColumnName="BadResult" />
+                <ScalarProperty Name="ParseText" ColumnName="ParseText" />
+                <ScalarProperty Name="NumberOfRounds" ColumnName="Rounds" />
+                <ScalarProperty Name="OptionsId" ColumnName="OptionsId" />
+                <ScalarProperty Name="Fighter2PlanId" ColumnName="Fighter2PlanId" />
+                <ScalarProperty Name="Fighter1PlanId" ColumnName="Fighter1PlanId" />
+                <ScalarProperty Name="IsParsed" ColumnName="IsParsed" />
+                <ScalarProperty Name="ResultType" ColumnName="ResultType" />
+                <ScalarProperty Name="Fighter1Win" ColumnName="Fighter1Win" />
+                <ScalarProperty Name="Fighter2Score" ColumnName="Fighter2Score" />
+                <ScalarProperty Name="Fighter1Score" ColumnName="Fighter1Score" />
+                <ScalarProperty Name="Fighter2Id" ColumnName="Fighter2Id" />
+                <ScalarProperty Name="Fighter1Id" ColumnName="Fighter1Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="FightId" ColumnName="FightId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FighterRounds">
+            <EntityTypeMapping TypeName="WeebulModel.FighterRound">
+              <MappingFragment StoreEntitySet="FighterRound">
+                <ScalarProperty Name="JabsLanded" ColumnName="JabsLanded" />
+                <ScalarProperty Name="RightsLanded" ColumnName="RightsLanded" />
+                <ScalarProperty Name="PowerPunchesLanded" ColumnName="PowerPunchesLanded" />
+                <ScalarProperty Name="IsWarned" ColumnName="IsWarned" />
+                <ScalarProperty Name="TacticsId" ColumnName="TacticsId" />
+                <ScalarProperty Name="Fatigue_End" ColumnName="Fatigue_End" />
+                <ScalarProperty Name="Fatigue_Start" ColumnName="Fatigue_Start" />
+                <ScalarProperty Name="Cut_Damage" ColumnName="Cut_Damage" />
+                <ScalarProperty Name="Base_Damage" ColumnName="Base_Damage" />
+                <ScalarProperty Name="Stun_Damage" ColumnName="Stun_Damage" />
+                <ScalarProperty Name="Endurance_Damage" ColumnName="Endurance_Damage" />
+                <ScalarProperty Name="Endurance_Start" ColumnName="Endurance_Start" />
+                <ScalarProperty Name="RoundId" ColumnName="RoundId" />
+                <ScalarProperty Name="IsFighter1" ColumnName="IsFighter1" />
+                <ScalarProperty Name="FRID" ColumnName="FRID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FighterRoundCuts">
+            <EntityTypeMapping TypeName="WeebulModel.FighterRoundCut">
+              <MappingFragment StoreEntitySet="FighterRoundCut">
+                <ScalarProperty Name="RoundDamage" ColumnName="RoundDamage" />
+                <ScalarProperty Name="CutID" ColumnName="CutID" />
+                <ScalarProperty Name="FRID" ColumnName="FRID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FightOptions">
+            <EntityTypeMapping TypeName="WeebulModel.FightOption">
+              <MappingFragment StoreEntitySet="FightOptions">
+                <ScalarProperty Name="WeightClass" ColumnName="WeightClass" />
+                <ScalarProperty Name="NumberOfRounds" ColumnName="NumberOfRounds" />
+                <ScalarProperty Name="CutMultiplier" ColumnName="CutMultiplier" />
+                <ScalarProperty Name="Luck" ColumnName="Luck" />
+                <ScalarProperty Name="OptionsId" ColumnName="OptionsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rounds">
+            <EntityTypeMapping TypeName="WeebulModel.Round">
+              <MappingFragment StoreEntitySet="Round">
+                <ScalarProperty Name="RoundNumber" ColumnName="RoundNumber" />
+                <ScalarProperty Name="ResultType" ColumnName="ResultType" />
+                <ScalarProperty Name="Fighter2Score" ColumnName="Fighter2Score" />
+                <ScalarProperty Name="Fighter1Score" ColumnName="Fighter1Score" />
+                <ScalarProperty Name="FightId" ColumnName="FightId" />
+                <ScalarProperty Name="RoundId" ColumnName="RoundId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tactics">
+            <EntityTypeMapping TypeName="WeebulModel.Tactic">
+              <MappingFragment StoreEntitySet="Tactics">
+                <ScalarProperty Name="Dirty" ColumnName="Dirty" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Strategy" ColumnName="Strategy" />
+                <ScalarProperty Name="Rest" ColumnName="Rest" />
+                <ScalarProperty Name="Defense" ColumnName="Defense" />
+                <ScalarProperty Name="Power" ColumnName="Power" />
+                <ScalarProperty Name="Aggressiveness" ColumnName="Aggressiveness" />
+                <ScalarProperty Name="TacticsId" ColumnName="TacticsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JudgeRounds">
+            <EntityTypeMapping TypeName="WeebulModel.JudgeRound">
+              <MappingFragment StoreEntitySet="JudgeRound">
+                <ScalarProperty Name="JudgeNumber" ColumnName="JudgeNumber" />
+                <ScalarProperty Name="RoundId" ColumnName="RoundId" />
+                <ScalarProperty Name="Fighter2Score" ColumnName="Fighter2Score" />
+                <ScalarProperty Name="Fighter1Score" ColumnName="Fighter1Score" />
+                <ScalarProperty Name="JrsId" ColumnName="JrsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

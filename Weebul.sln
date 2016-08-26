@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weebul.Core", "Weebul.Core\Weebul.Core.csproj", "{33A67917-E1E2-48B2-A68F-A4E62B0CA30A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weebul.Util", "Weebul.Util\Weebul.Util.csproj", "{4D5E370A-4C9C-4129-ABF8-273DDC41E084}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weebul.Scripting", "Weebul.Scripting\Weebul.Scripting.csproj", "{D315B924-B45F-4F4D-9FE5-FBF2AA0E012D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weebul.UI", "Weebul.UI\Weebul.UI.csproj", "{33A3F2E1-1896-4BE7-A1B9-520DFAEAABD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weebul.CoreTests", "Weebul.CoreTests\Weebul.CoreTests.csproj", "{DF000A05-1A2D-45A6-8188-D32461CBF001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weebul.ScriptingTests", "Weebul.ScriptingTests\Weebul.ScriptingTests.csproj", "{0EBD9C5C-6A8F-42C7-86C7-CDA068F50CD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weebul.Data", "Weebul.Data\Weebul.Data.csproj", "{F8ECAC0F-69AE-46F6-B02D-D873ED3C43F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33A67917-E1E2-48B2-A68F-A4E62B0CA30A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33A67917-E1E2-48B2-A68F-A4E62B0CA30A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33A67917-E1E2-48B2-A68F-A4E62B0CA30A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33A67917-E1E2-48B2-A68F-A4E62B0CA30A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D5E370A-4C9C-4129-ABF8-273DDC41E084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D5E370A-4C9C-4129-ABF8-273DDC41E084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D5E370A-4C9C-4129-ABF8-273DDC41E084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D5E370A-4C9C-4129-ABF8-273DDC41E084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D315B924-B45F-4F4D-9FE5-FBF2AA0E012D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D315B924-B45F-4F4D-9FE5-FBF2AA0E012D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D315B924-B45F-4F4D-9FE5-FBF2AA0E012D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D315B924-B45F-4F4D-9FE5-FBF2AA0E012D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33A3F2E1-1896-4BE7-A1B9-520DFAEAABD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33A3F2E1-1896-4BE7-A1B9-520DFAEAABD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33A3F2E1-1896-4BE7-A1B9-520DFAEAABD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33A3F2E1-1896-4BE7-A1B9-520DFAEAABD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF000A05-1A2D-45A6-8188-D32461CBF001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF000A05-1A2D-45A6-8188-D32461CBF001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF000A05-1A2D-45A6-8188-D32461CBF001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF000A05-1A2D-45A6-8188-D32461CBF001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EBD9C5C-6A8F-42C7-86C7-CDA068F50CD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EBD9C5C-6A8F-42C7-86C7-CDA068F50CD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EBD9C5C-6A8F-42C7-86C7-CDA068F50CD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EBD9C5C-6A8F-42C7-86C7-CDA068F50CD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8ECAC0F-69AE-46F6-B02D-D873ED3C43F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8ECAC0F-69AE-46F6-B02D-D873ED3C43F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8ECAC0F-69AE-46F6-B02D-D873ED3C43F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8ECAC0F-69AE-46F6-B02D-D873ED3C43F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

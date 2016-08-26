@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="868cccc0fa5d4d8f9eed3d2cdb14e347" Name="Diagram1">
+        <EntityTypeShape EntityType="WeebulModel.Fighter" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WeebulModel.FightPlan" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WeebulModel.Cut" Width="1.5" PointX="7.625" PointY="3.75" />
+        <EntityTypeShape EntityType="WeebulModel.Fight" Width="1.5" PointX="5" PointY="0.5" />
+        <EntityTypeShape EntityType="WeebulModel.FighterRound" Width="1.5" PointX="7.625" PointY="7.125" />
+        <EntityTypeShape EntityType="WeebulModel.FighterRoundCut" Width="1.5" PointX="9.875" PointY="8.625" />
+        <EntityTypeShape EntityType="WeebulModel.FightOption" Width="1.5" PointX="2.75" PointY="4" />
+        <EntityTypeShape EntityType="WeebulModel.Round" Width="1.5" PointX="4.5" PointY="6.75" />
+        <EntityTypeShape EntityType="WeebulModel.Tactic" Width="1.5" PointX="5.375" PointY="12.375" />
+        <AssociationConnector Association="WeebulModel.FK_FighterRoundCut_FighterRoundCut" />
+        <AssociationConnector Association="WeebulModel.FK_Fight_Fighter1" />
+        <AssociationConnector Association="WeebulModel.FK_Fight_Fighter2" />
+        <AssociationConnector Association="WeebulModel.FK_Fight_FightOptions" />
+        <AssociationConnector Association="WeebulModel.FK_Fight_FightPlan1" />
+        <AssociationConnector Association="WeebulModel.FK_Fight_FightPlan2" />
+        <AssociationConnector Association="WeebulModel.FK_FighterRound_Round" />
+        <AssociationConnector Association="WeebulModel.FK_FighterRound_Tactics" />
+        <AssociationConnector Association="WeebulModel.FK_FighterRoundCut_FighterRound" />
+        <EntityTypeShape EntityType="WeebulModel.JudgeRound" Width="1.5" PointX="6.75" PointY="16" />
+        <AssociationConnector Association="WeebulModel.FK_JudgeRound_Round" />
+        <AssociationConnector Association="WeebulModel.FK_Round_Fight" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

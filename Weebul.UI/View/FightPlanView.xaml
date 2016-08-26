@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="Weebul.UI.View.FightPlanView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.galasoft.ch/ignore"
+             xmlns:converters="clr-namespace:Weebul.UI.Converters"
+        mc:Ignorable="d ignore"
+             d:DesignWidth="300"
+             d:DesignHeight="400"            
+        >
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="VisibleConverter" />
+        <converters:NotBooleanVisibilityConverter x:Key="NotVisibleConverter" />
+        <ContextMenu x:Key="contextMenu">
+            <MenuItem Header="Validate Plan" Command="{Binding ValidateCommand}" />
+            <MenuItem Header="Show Line Hits" IsCheckable="True" IsChecked="{Binding ShowLineHits,Mode=TwoWay}" />
+        </ContextMenu>
+    </UserControl.Resources>
+    <Grid Background="Transparent" ContextMenu="{StaticResource contextMenu}">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            
+        </Grid.RowDefinitions>
+        <ComboBox Grid.Row="0" x:Name="comboPlans" ItemsSource="{Binding FightPlans}" SelectedItem="{Binding SelectedFightPlan, Mode=TwoWay}" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Id: " />
+                        <TextBlock Text="{Binding PlanId}" />
+                        <TextBlock Text=": " />
+                        <TextBlock Text="{Binding PlanName}" /> 
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBox x:Name="txtPlan" Grid.Row="1" Text="{Binding Path=FightPlanText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                 AcceptsReturn="True" VerticalScrollBarVisibility="Visible" 
+                 Visibility="{Binding ShowLineHits, Converter={StaticResource NotVisibleConverter}}"
+                 ContextMenu="{StaticResource contextMenu}">
+       
+        </TextBox>
+        <ListBox x:Name="lstPlan" Grid.Row="1"
+                 ItemsSource="{Binding LineHits, Mode=OneWay}" Visibility="{Binding ShowLineHits, Converter={StaticResource VisibleConverter}}"
+                 ContextMenu="{StaticResource contextMenu}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Item1, Mode=OneWay}" />
+                        <TextBlock Text="{Binding Item2, Mode=OneWay}" Grid.Column="1"/>
+                    </Grid>
+                    
+                    
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+         
+        </ListBox>
+        
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBlock Margin="5" Text="Enter Name " />
+            <TextBox Margin="5" Height="20" Text="{Binding FightPlanName, Mode=TwoWay}" MinWidth="150" />
+            <Button x:Name="SaveButton" Command="{Binding SaveCommand}" Content="Save" Margin="3"/> 
+            
+        </StackPanel>
+    </Grid>
+</UserControl>

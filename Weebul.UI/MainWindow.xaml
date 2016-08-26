@@ -1,0 +1,94 @@
+﻿<Window xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid" x:Class="Weebul.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:view="clr-namespace:Weebul.UI.View"
+        xmlns:local="clr-namespace:Weebul.UI"
+       
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="700"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" >
+
+            <MenuItem Header="Play" Command="{Binding PlayCommand}"/>
+            <MenuItem Header="Options">
+                <MenuItem Header="Set Options" Command="{Binding SetOptionsCommand}" /> 
+                <MenuItem Header="Clear Output" Command="{Binding ClearCommand}" /> 
+            </MenuItem>
+            
+        </Menu>
+
+        <telerik:RadDocking Grid.Row="1">
+
+            <telerik:RadSplitContainer InitialPosition="DockedBottom" >
+             
+                <telerik:RadPaneGroup>
+                    <telerik:RadPane Header="Options" >
+                        <view:OptionsView /> 
+                    </telerik:RadPane>
+                    <telerik:RadPane Header="Pivot Sim">
+                        <view:PivotSimView />
+                    </telerik:RadPane>
+               
+                    <telerik:RadPane Header="Parser">
+                        <view:ParserView />
+                    </telerik:RadPane>
+                    <telerik:RadPane Header="Comparer">
+                        <view:CompareDamageView />
+                    </telerik:RadPane>
+                </telerik:RadPaneGroup>
+
+                <telerik:RadPaneGroup>
+
+                    <telerik:RadPane Header="Results">
+                        <view:FightResultsView />
+                    </telerik:RadPane>
+                    <telerik:RadPane Header="Output">
+                        <TextBox AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding OutputText}" />
+                    </telerik:RadPane>
+                    <telerik:RadPane Header="Pivot Results">
+                        <view:PivotResultView />
+                    </telerik:RadPane>
+                </telerik:RadPaneGroup>
+            </telerik:RadSplitContainer>
+
+  
+            <telerik:RadDocking.DocumentHost>
+                    <telerik:RadSplitContainer>
+                    <telerik:RadPaneGroup>
+                        <telerik:RadPane Header="Fighter 1">
+                            <view:FighterView DataContext="{Binding Fighter1, Source={StaticResource Locator}}" />
+                        </telerik:RadPane>
+
+                    </telerik:RadPaneGroup>
+                    <telerik:RadPaneGroup>
+                            <telerik:RadPane Header="Fight Plan" >
+                                <view:FightPlanView  DataContext="{Binding FightPlanF1, Source={StaticResource Locator}}"/>
+                            </telerik:RadPane>
+                        </telerik:RadPaneGroup>
+
+                    <telerik:RadPaneGroup>
+                        <telerik:RadPane Header="Fight Plan P2">
+                            <view:FightPlanView  DataContext="{Binding FightPlanF2, Source={StaticResource Locator}}"/>
+                        </telerik:RadPane>
+                    </telerik:RadPaneGroup>
+                    <telerik:RadPaneGroup>
+                        <telerik:RadPane Header="Fighter 2" >
+                            <view:FighterView DataContext="{Binding Fighter2, Source={StaticResource Locator}}" />
+
+                        </telerik:RadPane>
+                    </telerik:RadPaneGroup>
+                    </telerik:RadSplitContainer>
+            </telerik:RadDocking.DocumentHost>
+
+        </telerik:RadDocking>
+
+    </Grid>
+</Window>
