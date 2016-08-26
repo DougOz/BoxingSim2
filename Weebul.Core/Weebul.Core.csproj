@@ -86,6 +86,7 @@
     <Compile Include="Model\PivotFighter.cs" />
     <Compile Include="Model\PivotFightResultSet.cs" />
     <Compile Include="Model\PivotFightSimulator.cs" />
+    <Compile Include="Model\RoundRandomizer.cs" />
     <Compile Include="Model\PunchStats.cs" />
     <Compile Include="Model\RoundDamage.cs" />
     <Compile Include="Model\RoundReportOld.cs" />

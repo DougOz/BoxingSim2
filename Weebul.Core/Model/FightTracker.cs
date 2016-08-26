@@ -1,33 +1,24 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Weebul.Core.Helpers;
-using static Weebul.Core.Model.FighterRound;
 
 namespace Weebul.Core.Model
 {
     public class FightTracker : ModelBase 
     {
-
         public FightTracker()
         {
-            this.Fight = new Model.Fight();
+            this.Fight = new Fight();
             this.Options = new FightOptions();
         }
         public FightTracker(Fighter fighter1, Fighter fighter2, FightPlan fighter1Plan, FightPlan fighter2Plan, FightOptions options) : this() 
         {
             this.Fighter1 = new FighterFight(fighter1, fighter1Plan);
-
-
             this.Fighter2 = new FighterFight(fighter2, fighter2Plan);
-            
             this.Options = options; 
-            
-            
         }
         public FightTracker(FighterFight fighter1, FighterFight fighter2, FightOptions options)
         {
@@ -40,13 +31,7 @@ namespace Weebul.Core.Model
         public FighterFight Fighter1 { get; set; }
         public FighterFight Fighter2 { get; set; }
         public int Round { get; set; }
-
         public Fight Fight { get; set; }
-        //public List<RoundResult> AllRounds { get; set; }
-        //public int ScoreFighter1 { get; set; }
-        //public int ScoreFighter2 { get; set; }
-        //public FightOutcome Result { get; set; }
-        //public FightResultType ResultType { get; set; }
         public bool IsOver { get; set; }
 
         public void AdjustStrength()
@@ -72,7 +57,7 @@ namespace Weebul.Core.Model
             this.Fighter1.Reset();
             this.Fighter2.Reset();
             AdjustStrength();
-            this.Fight = new Model.Fight()
+            this.Fight = new Fight()
             {
                 Fighter1 = this.Fighter1.Fighter.Stats,
                 Fighter2 = this.Fighter2.Fighter.Stats
@@ -81,7 +66,6 @@ namespace Weebul.Core.Model
             this.IsOver = false; 
             this.Fighter1.AdjustStartEndurance(this.Options.WeightClass);
             this.Fighter2.AdjustStartEndurance(this.Options.WeightClass);
-
             //To do move this somewhere 
             Resources.CutPercentMultiplier = this.Options.CutFactor;
 
@@ -105,12 +89,9 @@ namespace Weebul.Core.Model
         public static List<Fight> PlayMultiple(int numberOfTimes, Fighter f1, Fighter f2, FightPlan fp1, FightPlan fp2, FightOptions options)
         {
             int perEach = numberOfTimes / 20;
-
             var results = new ConcurrentBag<List<Fight>>();
-
             Parallel.For(0, 20, (i) =>
               {
-                  
                   FightTracker tracker = new FightTracker(f1, f2, fp1.Copy(), fp2.Copy(), options);
                   List<Fight> resTemp = tracker.PlayFights(perEach);
                   results.Add(resTemp);
@@ -131,8 +112,7 @@ namespace Weebul.Core.Model
         public static FightResultSet PlayMultiple_ResultSet(int numberOfTimes, FighterFight f1, FighterFight f2, FightOptions options)
         {
             List<Fight> fights = PlayMultiple(numberOfTimes, f1.Fighter, f2.Fighter, f1.FightPlan, f2.FightPlan, options);
-            return new Model.FightResultSet(fights.Select(f => f.Result));
-
+            return new FightResultSet(fights.Select(f => f.Result));
         }
         public static List<Fight> PlayMultiple(int numberOfTimes, FightTracker tracker)
         {
@@ -165,16 +145,13 @@ namespace Weebul.Core.Model
 
         public Round FightRound()
         {
-
             FightRoundVariables var1 = FightRoundVariables.GetVariables(this.Round, this.Fight.Fighter1Score - this.Fight.Fighter2Score, this.Fighter1, this.Fighter2);
             this.Fighter1.SetStartRoundStatsAndGetPlan(var1);
             FightRoundVariables var2 = FightRoundVariables.GetVariables(this.Round, this.Fight.Fighter2Score - this.Fight.Fighter1Score, this.Fighter2, this.Fighter1);
             this.Fighter2.SetStartRoundStatsAndGetPlan(var2);
             Round ret = new Round() { RoundNumber = this.Round, Fight = this.Fight  };
-
             if (this.Fighter1.RoundStats.Plan.IsTowel || this.Fighter2.RoundStats.Plan.IsTowel)
             {
-
                 ret.SetTowel(!this.Fighter1.RoundStats.Plan.IsTowel);
             }
             else
@@ -206,7 +183,6 @@ namespace Weebul.Core.Model
                 this.Fighter2.Knockdowns += ret.Fighter2Round.StunsCaused / 2;
                 this.Fight.Fighter1Score += ret.Fighter1Score;
                 this.Fight.Fighter2Score += ret.Fighter2Score;
-
                 this.Fighter1.RecoverEndurance();
                 ret.Fighter1Round.EndurancePostRecover = this.Fighter1.EndurancePoints;
                 this.Fighter2.RecoverEndurance();
@@ -217,15 +193,17 @@ namespace Weebul.Core.Model
         
         private void SimRound(Round round)
         {
+            //Adjust the stats of the fighters for endurance/cuts/tactics
             this.Fighter1.MakeAdjustments(this.Fighter2, this.Options);
             this.Fighter2.MakeAdjustments(this.Fighter1, this.Options);
 
-           
+            //run the base calculations for damage
             round.Fighter1Round = Fighter1.BeginFighting(this.Fighter2, round);
             round.Fighter2Round = Fighter2.BeginFighting(this.Fighter1, round);
-
             round.Fighter1Round.MultiplyDamageLuckFactor(Fighter1.RoundStats.LuckFactor);
             round.Fighter2Round.MultiplyDamageLuckFactor(Fighter2.RoundStats.LuckFactor);
+
+            //Adjust damage if one of the fighters is stunned
             if (round.Fighter1Round.DamageDealt.StunValue > 1.5 && round.Fighter1Round.DamageDealt.StunValue > round.Fighter2Round.DamageDealt.StunValue)
             {
                 Fighter2.RoundStats.LuckFactor *= 0.75;
@@ -236,16 +214,17 @@ namespace Weebul.Core.Model
                 Fighter1.RoundStats.LuckFactor *= 0.75;
                 round.Fighter1Round.MultiplyDamageLuckFactor(0.75);
             }
-
+            
             round.Fighter1Round.DamageReceived = round.Fighter2Round.DamageDealt;
             round.Fighter2Round.DamageReceived = round.Fighter1Round.DamageDealt;
             round.Fighter1Round.SetCuts(Fighter1, round.Fighter2Round);
             round.Fighter2Round.SetCuts(Fighter2, round.Fighter1Round);
-
             round.Fighter1Round.SetPunches(Fighter1.RoundStats);
             round.Fighter2Round.SetPunches(Fighter2.RoundStats);
+
             Fighter1.TotalBaseDamage += round.Fighter1Round.DamageReceived.BaseDamage;
             Fighter2.TotalBaseDamage += round.Fighter2Round.DamageReceived.BaseDamage;
+
             Fighter1.FatigueRound(round.Fighter2Round.DamageDealt.EnduranceDamage);
             round.Fighter1Round.FatigueStartRound = Fighter1.FatigueLossStartRound;
             round.Fighter1Round.FatigueEndRound = Fighter1.GetEndOfRoundFatigue();
@@ -257,7 +236,6 @@ namespace Weebul.Core.Model
             round.Fighter1Round.IsTKOedByEndurance = Fighter1.EndurancePercent < 0;
             round.Fighter2Round.IsTKOedByEndurance = Fighter2.EndurancePercent < 0;
 
-
             round.Fighter1Round.Cuts = Fighter1.Cuts.Copy();
             round.Fighter2Round.Cuts = Fighter2.Cuts.Copy();
 
@@ -268,7 +246,6 @@ namespace Weebul.Core.Model
 
             round.Fighter1TotalScore = this.Fight.Fighter1Score;
             round.Fighter2TotalScore = this.Fight.Fighter2Score;
-
         }
 
         public override string ToString()
